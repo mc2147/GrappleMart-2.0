@@ -6,3 +6,8 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
+export {HomepageLayout} from './home'
+export {AddProduct} from './AddProduct'
+export {AddCourse} from './AddCourse'
+export {AllCourses} from './AllCourses'
+export {SingleCourse} from './SingleCourse'

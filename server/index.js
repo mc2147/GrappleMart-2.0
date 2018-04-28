@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const compression = require('compression')
 const session = require('express-session')
 const passport = require('passport')
+const fileUpload = require('express-fileupload');
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
@@ -33,6 +34,7 @@ passport.deserializeUser((id, done) =>
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
+  app.use(fileUpload());
 
   // body parsing middleware
   app.use(bodyParser.json())
@@ -58,6 +60,12 @@ const createApp = () => {
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
 
+  // sends index.html
+  app.use('*', (req, res) => {
+    console.log("LINE 63 SERVER");
+    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+  })
+  
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
@@ -67,11 +75,6 @@ const createApp = () => {
     } else {
       next()
     }
-  })
-
-  // sends index.html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
 
   // error handling endware

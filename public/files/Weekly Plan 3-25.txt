@@ -1,0 +1,77 @@
+AS Plan
+
+Major Components:
+
+-Workouts (this week)
+	Edge cases
+	Post requests
+	Tracking past workouts
+	Copy & text
+April 1st to 5/6th:
+	-Videos & Descriptions
+April 9th to 22nd:
+	-User handling
+		User stats
+		Payments, encryptions, etc. 
+	-Deployment
+April 22nd to May 1st:
+	-Finalizing styling, copy
+	-Testing
+May 1st to 20th:
+	-Test & beta users
+	-Think of V2 + V3 users
+May 20th to July 1st:
+	-Amy focuses on AWS Cert, no additional projects
+
+Full List:
+1. Video page
+2. Youtube player
+3. Sign up
+4. User Models
+5. Encryption
+6. Payments
+7. Email confirmation
+8. Workout page
+9. Get
+10. Post
+11. Update
+12. Get (past workouts)
+13. User stats page
+14. Glossary
+15. Styling & mobile responsiveness
+
+Moving In Items:
+-Room dividers
+-Mattress + Bedframe (?)
+-Lamps
+	1 big, 1-2 small
+-Work desk
+-Small dining table
+-Beanbag 
+-2 desk chairs, 2 regular chairs (for dining table)
+-Monitors (later?)
+
+Weekly Plan:
+-Goals:
+	AS Workouts
+		Get & post requests
+		Workout edge cases
+	Talk to Amanda about her site, most likely start in July or June
+	Update Alex's(?) -> Wednesday
+		Send them a video of get/post -> deployment next
+	Buy stuff, move stuff in (see list above) -> weekend (Saturday afternoon to evening)
+	R&R:
+		Friday evening, Sunday evening, Saturday afternoon to evening
+	Amy's meetings:
+		Tuesday or Wednesday evening
+		*Reschedule training for Amy's meeting
+
+Workout Days;
+	Tuesday or Thursday morning
+	Friday or Sunday morning
+
+
+
+
+
+
