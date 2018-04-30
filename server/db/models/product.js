@@ -9,23 +9,31 @@ const Product = db.define('product', {
   },
   description: {
     type: Sequelize.TEXT,
+    defaultValue: "",
+    unique: false,
+    // unique: false,
+  },
+  name: {
+    type: Sequelize.STRING,
+    defaultValue: "",
     unique: false,
   },
   fileURL: {
     type: Sequelize.STRING,
+    defaultValue: "",
     unique: false,
   },
   tags: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    // Making `.salt` act like a function hides it when serializing to JSON.
-    // This is a hack to get around Sequelize's lack of a "private" option.
-    get () {
-      return () => this.getDataValue('salt')
-    }
+    defaultValue: [],
+    unique: false,
   },
-  googleId: {
-    type: Sequelize.STRING
+  countryPurchases: {
+    type: Sequelize.JSON,
+    defaultValue: {},
   }
 })
+
+// db.sync({force: true})
 
 module.exports = Product

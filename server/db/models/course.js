@@ -2,7 +2,7 @@ const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Course = db.define('product', {
+const Course = db.define('course', {
   title: {
     type: Sequelize.STRING,
     unique: true,

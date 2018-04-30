@@ -21,21 +21,49 @@ import {
   Select
 } from 'semantic-ui-react'
 import axios from 'axios'
+import {countryCodes} from '../globals'
 
 let productOptions = [{key: 1, value: 'video', text:'Video'}, {key: 2, value: 'ebook', text:'E-Book'}]
 
-export class AddProduct extends Component {
+let countryOptions = [];
+
+countryCodes.forEach(code => {
+  let elem = [];
+  let lowercaseCode = code.code.toLowerCase();
+  countryOptions.push({
+    key: lowercaseCode,
+    value: lowercaseCode,
+    flag: lowercaseCode,
+    text: code.name,
+  })
+  // let countryOptions = [{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
+
+})
+
+export class PurchaseProduct extends Component {
   constructor() {
     super() 
     this.state = {
-      tags: []
+      tags: [],
+      product: {},
+      countryCode: "",
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.selectCountry = this.selectCountry.bind(this);
   }
     componentDidMount() {
-      // var tagInput = document.getElementById("tags");
-      // tagInput.tagInput();
-
+      console.log("axios URL: ", `api/products/${this.props.match.params.id}`);
+      axios.get(`/api/products/${this.props.match.params.id}`).then(response => {
+        this.setState({
+          product:response.data,
+        })
+      })
+    }
+    selectCountry(value) {
+      console.log("selectCountry function: ", value);
+      this.setState({
+        countryCode:value,
+      })
     }
     handleChange(tags) {
       console.log("onChange tags: ", tags);
@@ -43,41 +71,49 @@ export class AddProduct extends Component {
     }
 
     handleSubmit(event) {
-        let output = {
-          title: event.target.productTitle.value,
-          // file: 
-        }
-        const formData = new FormData();
-        let productFile = this.uploadInput.files[0];
-        formData.append('productFile', productFile);
-        formData.append('title', event.target.productTitle.value);
-        formData.append('description', event.target.productDescription.value);
-        console.log("formData: ", formData);
+      event.preventDefault();
+      console.log("event: ", event);
+      console.log("submitted country: ", event.target.originCountry);
+      //   let output = {
+      //     title: event.target.productTitle.value,
+      //     // file: 
+      //   }
+      //   const formData = new FormData();
+      //   let productFile = this.uploadInput.files[0];
+      //   formData.append('productFile', productFile);
+      //   formData.append('title', event.target.productTitle.value);
+      //   formData.append('description', event.target.productDescription.value);
+      //   console.log("formData: ", formData);
 
-        axios.post('api/products', formData, { 'Content-Type': 'multipart/form-data' })
-        .then(response => {
-          console.log("post response: ", response.data);
-        })
+      //   axios.post('api/products', formData, { 'Content-Type': 'multipart/form-data' })
+      //   .then(response => {
+      //     console.log("post response: ", response.data);
+      //   })
           
     }
 
     render() {
+      console.log("this.id: ", this.props.match.params.id)      
       // $('#tags').tagsInput();
-      
+      let product = this.state.product;
+      console.log("this product: ", product)
+      console.log("countryCodes: ", countryCodes);  
+      console.log("this.state: ", this.state);
+      // let countryOptions = [{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
         return (
             <div>    
             
             <Segment style={{ padding: '0em', paddingTop:'5em' }} vertical>
             <Container text style={{marginBottom:'2em'}}>
-                <Header as='h3' style={{ fontSize: '3em' }} textAlign='center'>Add Product</Header>
+                <Header as='h3' style={{ fontSize: '3em' }} textAlign='center'>{product.title}</Header>
             </Container>
              
-            <Form style={{width:"100%"}} onSubmit={this.handleSubmit} action="api/products/test-download" method="GET">
+            <Form style={{width:"100%"}} onSubmit={this.handleSubmit} action={`/api/products/${product.id}/download`} method="GET">
             <Grid celled='internally' columns='equal' stackable>
             <Grid.Row>
-            <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-                      <Header as='h3' style={{ fontSize: '2em' }} textAlign='center'>Upload Product</Header>
-                      <p style={{ fontSize: '1.33em' }}>Enter basic product information and upload file</p>
+            <Grid.Column style={{ paddingBottom: '5em', paddingTop: '0em' }}>
+                      <Header as='h3' style={{ fontSize: '2em' }} textAlign='center'>Product Preview</Header>
+                      <p style={{ fontSize: '1.33em' }}>{product.title}</p>
                       <Form.Group>
                           <Form.Field>
                             <label>Product Type</label>                      
@@ -98,14 +134,20 @@ export class AddProduct extends Component {
                             </Form.Field>                                              
                           </Form.Group>
             </Grid.Column>
-            <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-                      <Header as='h3' style={{ fontSize: '2em' }} textAlign='center'>Product Details</Header>
+            <Grid.Column style={{ paddingBottom: '5em', paddingTop: '0em' }}>
+                      <Header as='h3' style={{ fontSize: '2em' }} textAlign='center'>Payment Information</Header>
                       <p style={{ fontSize: '1.33em' }}>
-                      Enter product description and related tags
+                      Enter payment information
                       </p>
                       <Form.Group>
                           <Form.Field>
-                          <label>Description</label>
+                          <label>Country of Origin</label>
+                          <Form.Select name="originCountry" placeholder='Select your country' options={countryOptions}
+                          onChange={(e, { value }) => {
+                            this.selectCountry(value)
+                          }}                          
+                          />
+                          
                           <textarea name="productDescription" cols="120"></textarea>
                         </Form.Field>                      
                       </Form.Group>
@@ -116,7 +158,7 @@ export class AddProduct extends Component {
                             <TagInput />
                         </Form.Field>                      
                         </Form.Group>
-                        <Button type="submit" floated="right" primary>+ Add Product</Button>                        
+                        <Button type="submit" floated="right" primary>Purchase Product</Button>                        
               </Grid.Column>
               </Grid.Row>
               </Grid>

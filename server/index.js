@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload');
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
 module.exports = app
@@ -59,6 +59,13 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
+
+  // sends map.html
+  app.use('/map', (req, res) => {
+    console.log("LINE 63 SERVER");
+    res.sendFile(path.join(__dirname, '..', 'public/map.html'))
+  })
+  
 
   // sends index.html
   app.use('*', (req, res) => {
