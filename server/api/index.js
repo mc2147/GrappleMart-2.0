@@ -20,7 +20,7 @@ router.get('/country-seeds', (req, res) => {
   //   let randomNum = Math.floor(200*Math.random());
   //   countrySeeds[K] = {purchases: randomNum}
   // }
-  res.json(countrySeeds);
+  res.send(JSON.stringify(countrySeeds));
 })
 
 router.use((req, res, next) => {
